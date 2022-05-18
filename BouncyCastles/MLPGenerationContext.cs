@@ -15,7 +15,8 @@ namespace BouncyCastles
             ActivationFunction.Get(ActivationFunction.ActivationFunctionType.SoftPlus),
             ActivationFunction.Get(ActivationFunction.ActivationFunctionType.SoftPlus),
             ActivationFunction.Get(ActivationFunction.ActivationFunctionType.SoftPlus),
-            ActivationFunction.Get(ActivationFunction.ActivationFunctionType.Relu)
+            ActivationFunction.Get(ActivationFunction.ActivationFunctionType.Relu),
+            ActivationFunction.Get(ActivationFunction.ActivationFunctionType.Linear)
         };
 
         public double NodeWeightMin { get; set; } = -1;
@@ -24,7 +25,7 @@ namespace BouncyCastles
         public double NodeBiasMax { get; set; } = -1;
 
         /// <summary>
-        /// Both hacks, I know, but nicely contained. Demoware.
+        /// Hack, I know, but nicely contained. Demoware.
         /// </summary>
         public int CurrentBuildNodeIndex { get; set; } = 0;
 

@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ActivationFunctions\ActivationFunction.cs" />
     <Compile Include="ActivationFunctions\CustomActivationFunction.cs" />
+    <Compile Include="ActivationFunctions\LinearActivationFunction.cs" />
     <Compile Include="ActivationFunctions\ReluActivationFunction.cs" />
     <Compile Include="ActivationFunctions\SigmoidActivationFunction.cs" />
     <Compile Include="ActivationFunctions\SoftplusActivationFunction.cs" />

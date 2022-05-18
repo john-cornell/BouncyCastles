@@ -11,7 +11,7 @@ namespace BouncyCastles.ActivationFunctions
     public abstract class ActivationFunction
     {
         //Base functionality for subclasses        
-        public enum ActivationFunctionType { SoftPlus, Relu, Sigmoid, Custom }
+        public enum ActivationFunctionType { SoftPlus, Relu, Sigmoid, Linear, Custom }
         public ActivationFunctionType FunctionType { get; private set; }
 
         Func<double, double> _function;
@@ -69,6 +69,7 @@ namespace BouncyCastles.ActivationFunctions
             Add<SoftplusActivationFunction>();
             Add<ReluActivationFunction>();
             Add<SigmoidActivationFunction>();
+            Add<LinearActivationFunction>();
         }
 
         private static void Add<TActivationFunction>() where TActivationFunction : ActivationFunction
