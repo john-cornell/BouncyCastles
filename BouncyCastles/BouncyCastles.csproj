@@ -43,7 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivationFunction.cs" />
+    <Compile Include="ActivationFunctions\ActivationFunction.cs" />
+    <Compile Include="ActivationFunctions\CustomActivationFunction.cs" />
+    <Compile Include="ActivationFunctions\ReluActivationFunction.cs" />
+    <Compile Include="ActivationFunctions\SigmoidActivationFunction.cs" />
+    <Compile Include="ActivationFunctions\SoftplusActivationFunction.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
