@@ -9,7 +9,7 @@ namespace BouncyCastles.ActivationFunctions
     public class SoftplusActivationFunction : ActivationFunction
     {
         public SoftplusActivationFunction() :
-            base((input) => Math.Log10(1 + Math.Exp(input)),
+            base((input) => Math.Log(1 + Math.Exp(input)),
                 ActivationFunctionType.SoftPlus)
         { }
     }

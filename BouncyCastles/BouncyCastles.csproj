@@ -50,7 +50,7 @@
     <Compile Include="ActivationFunctions\SigmoidActivationFunction.cs" />
     <Compile Include="ActivationFunctions\SoftplusActivationFunction.cs" />
     <Compile Include="Layer.cs" />
-    <Compile Include="MLPGenerationContext.cs" />
+    <Compile Include="NeuralNetwork.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

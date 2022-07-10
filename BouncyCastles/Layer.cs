@@ -1,5 +1,4 @@
-﻿using BouncyCastles.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,28 +6,30 @@ using System.Threading.Tasks;
 
 namespace BouncyCastles
 {
-    public enum LayerType { Input, Hidden, Output }
-
-    public class Layer 
+    public class Layer
     {
-        public LayerType LayerType { get; set; }
-        public List<Node> Nodes { get; private set; }
-
-        public Layer(MLPGenerationContext context)
+        public Layer(int layerLevel)
         {
-            Generate(context);
+            LayerLevel = layerLevel;
+        }
+        public int LayerLevel { get; private set; }
+
+        public List<Node> Nodes = new List<Node>();
+
+        public void Process(List<Node> inputNodes)
+        {
+            if (LayerLevel == 0)
+                throw new InvalidOperationException("Layer Level 0 nodes cannot process previous nodes");
+
+            Nodes.ForEach(n => n.Process(inputNodes));
         }
 
-        private void Generate(MLPGenerationContext context)
+        public Node AddNode()
         {
-            int nodeCount = context.NodeSizes[context.CurrentBuildNodeIndex];
+            Node node = new Node(LayerLevel);
+            Nodes.Add(node);
 
-            Nodes = new List<Node>(nodeCount);
-
-            for (int i = 0; i< nodeCount; i++)
-            {
-                Nodes.Add(new Node(context));
-            }
+            return node;
         }
     }
 }

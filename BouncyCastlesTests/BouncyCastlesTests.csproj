@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="TestActivationFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestNetwork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
