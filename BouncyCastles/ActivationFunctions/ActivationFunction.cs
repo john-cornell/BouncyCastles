@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BouncyCastles.Utilities;
+using System;
 using System.Collections.Generic;
 
 namespace BouncyCastles.ActivationFunctions
@@ -11,7 +12,7 @@ namespace BouncyCastles.ActivationFunctions
     public abstract class ActivationFunction
     {
         //Base functionality for subclasses        
-        public enum ActivationFunctionType { SoftPlus, Relu, Sigmoid, Linear, Custom }
+        public enum ActivationFunctionType { Linear, SoftPlus, Relu, Sigmoid, Custom }
         public ActivationFunctionType FunctionType { get; private set; }
 
         Func<double, double> _function;
@@ -54,6 +55,13 @@ namespace BouncyCastles.ActivationFunctions
             throw new InvalidOperationException($"Function {activationFunctionType} not available");
         }
 
+        public static ActivationFunction GetRandom()
+        {
+            int random = MLPMaths.Random(0, 4);
+
+            return Get((ActivationFunctionType) random);
+        }
+
         /// <summary>
         /// Add a custom calculation to the internal cache, retrievable by supplied tag
         /// </summary>
@@ -79,6 +87,6 @@ namespace BouncyCastles.ActivationFunctions
             _functions[function.FunctionType] = function;
         }
 
-        
+
     }
 }

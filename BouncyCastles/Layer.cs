@@ -24,6 +24,12 @@ namespace BouncyCastles
             Nodes.ForEach(n => n.Process(inputNodes));
         }
 
+        internal IEnumerable<Node> AddNodes(int nodeCount)
+        {
+            for (int i = 0; i < nodeCount; i++)
+                yield return AddNode();
+        }
+
         public Node AddNode()
         {
             Node node = new Node(LayerLevel);

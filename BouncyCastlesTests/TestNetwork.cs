@@ -21,25 +21,62 @@ namespace BouncyCastlesTests
             Layer layer1 = network.AddLayer();
             Layer layer2 = network.AddLayer();
 
+            Node node1_0 = layer1.AddNode();
             Node node1_1 = layer1.AddNode();
-            Node node1_2 = layer1.AddNode();
 
-            Node node2_1 = layer2.AddNode();
+            Node node2_0 = layer2.AddNode();
 
             //Input node - no weights, bias or activation functions are called so we can leave this as default values
             layer0.AddNode();
 
-            node1_1.AddWeight(-34.4);
-            node1_1.Bias = 2.14;
+            node1_0.AddWeight(-34.4);
+            node1_0.Bias = 2.14;
+            node1_0.ActivationFunction = ActivationFunction.Get(ActivationFunction.ActivationFunctionType.SoftPlus);
+
+            node1_1.AddWeight(-2.52);
+            node1_1.Bias = 1.29;
             node1_1.ActivationFunction = ActivationFunction.Get(ActivationFunction.ActivationFunctionType.SoftPlus);
 
-            node1_2.AddWeight(-2.52);
-            node1_2.Bias = 1.29;
-            node1_2.ActivationFunction = ActivationFunction.Get(ActivationFunction.ActivationFunctionType.SoftPlus);
+            //Node 2 uses default activation function, linear, no effect
+            node2_0.AddWeight(-1.3);
+            node2_0.AddWeight(2.28);
+            node2_0.Bias = -0.58;
+
+            for (decimal dm = 0; dm <= 1; dm += 0.02m)
+            {
+                double d = (double)dm;
+
+                double[] output = network.Process(new double[] { d });
+
+                Assert.AreEqual(output[0], _nnExpected[d], 0.000000001);
+            }
+        }
+
+        [Test]
+        public void When_known_network_created_from_static_processed_output_should_be_expected()
+        {
+            NeuralNetwork network = NeuralNetwork.Create(new int[] { 1, 2, 1 });
+
+            //Start at layer 1 as not configuring input node
+            Layer layer1 = network.Layers[1];
+            Layer layer2 = network.Layers[2];
+
+            Node node1_0 = layer1.Nodes[0];
+            Node node1_1 = layer1.Nodes[1];
+
+            Node node2_1 = layer2.Nodes[0];
+
+            node1_0.Weights[0] = -34.4;
+            node1_0.Bias = 2.14;
+            node1_0.ActivationFunction = ActivationFunction.Get(ActivationFunction.ActivationFunctionType.SoftPlus);
+
+            node1_1.Weights[0] = -2.52;
+            node1_1.Bias = 1.29;
+            node1_1.ActivationFunction = ActivationFunction.Get(ActivationFunction.ActivationFunctionType.SoftPlus);
 
             //Node 2 uses default activation function, linear, no effect
-            node2_1.AddWeight(-1.3);
-            node2_1.AddWeight(2.28);
+            node2_1.Weights[0] = -1.3;
+            node2_1.Weights[1] = 2.28;
             node2_1.Bias = -0.58;
 
             for (decimal dm = 0; dm <= 1; dm += 0.02m)

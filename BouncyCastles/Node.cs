@@ -9,7 +9,7 @@ namespace BouncyCastles
 {
     public class Node
     {
-        List<double> _weights;
+        public List<double> Weights { get; set; }
 
         int _layerLevel;        
         double _bias;
@@ -18,7 +18,7 @@ namespace BouncyCastles
         public Node(int layerLevel)
         {
             _layerLevel = layerLevel;
-            _weights = new List<double>();
+            Weights = new List<double>();
 
             //Default - will not effect data 
             ActivationFunction = ActivationFunction.Get(ActivationFunction.ActivationFunctionType.Linear);
@@ -40,19 +40,19 @@ namespace BouncyCastles
         public double Bias { get => _bias; set => _bias = value; }
         public void AddWeight(double weight)
         {
-            _weights.Add(weight);
+            Weights.Add(weight);
         }
 
         public void Process(List<Node> inputNodes)
         {
 
-            if (inputNodes.Count != _weights.Count)
+            if (inputNodes.Count != Weights.Count)
                 throw new InvalidOperationException("Weight count doesn't match input node count");
 
             if (_layerLevel > 0)
             {
-                double weightedInputs = Enumerable.Range(0, _weights.Count)
-                    .Sum(i => inputNodes[i].Value * _weights[i]);
+                double weightedInputs = Enumerable.Range(0, Weights.Count)
+                    .Sum(i => inputNodes[i].Value * Weights[i]);
 
                 _value = ActivationFunction.Evaluate(_bias + weightedInputs);
             }

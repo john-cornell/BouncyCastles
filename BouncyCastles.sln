@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BouncyCastles", "BouncyCast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BouncyCastlesTests", "BouncyCastlesTests\BouncyCastlesTests.csproj", "{16C2461A-2CAC-4943-96B2-CD9D890AAD9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNISTImageRecognitionUI", "MNISTImageRecognitionUI\MNISTImageRecognitionUI.csproj", "{5CDF18D6-8423-47B0-91F4-A43BEC03A4C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNISTImageRecognitionTraining", "MNISTImageRecognitionTraining\MNISTImageRecognitionTraining.csproj", "{15688432-E7D2-4973-8DA0-EECFCE4FA849}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{16C2461A-2CAC-4943-96B2-CD9D890AAD9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16C2461A-2CAC-4943-96B2-CD9D890AAD9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16C2461A-2CAC-4943-96B2-CD9D890AAD9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CDF18D6-8423-47B0-91F4-A43BEC03A4C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CDF18D6-8423-47B0-91F4-A43BEC03A4C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CDF18D6-8423-47B0-91F4-A43BEC03A4C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CDF18D6-8423-47B0-91F4-A43BEC03A4C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15688432-E7D2-4973-8DA0-EECFCE4FA849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15688432-E7D2-4973-8DA0-EECFCE4FA849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15688432-E7D2-4973-8DA0-EECFCE4FA849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15688432-E7D2-4973-8DA0-EECFCE4FA849}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
