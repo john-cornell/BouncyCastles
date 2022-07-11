@@ -11,7 +11,17 @@ namespace MNISTImageRecognitionTraining
         static void Main(string[] args)
         {
             Console.WriteLine("Loading data");
-            var data = new Loader().GetData(@"C:\FB\archive\trainingSet\trainingSet");
+            //https://github.com/teavanist/MNIST-JPG for data
+
+            //var data = new Loader().GetData(@"C:\FB\archive\trainingSet\trainingSet");
+
+            var data = new Loader().GetData(@"C:\FizzBash 2022\archive\trainingSample\trainingSample");
+            //var data = new Loader().GetData(@"C:\SBTemp");
+            Console.WriteLine("Training");
+
+            Trainer trainer = new Trainer();
+
+            trainer.Train(data);
         }
     }
 }

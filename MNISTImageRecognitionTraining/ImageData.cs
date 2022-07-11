@@ -10,6 +10,11 @@ namespace MNISTImageRecognitionTraining
     {
         public Dictionary<string, NumericItem> Data { get; set; }
 
+        public ImageData(Dictionary<string, NumericItem> data)
+        {
+            Data = data;
+        }
+
         public List<NumericItem> this [int item]
         { 
             get

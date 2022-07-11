@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using MNISTImageRecognitionTraining;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -22,28 +23,64 @@ namespace MNISTImageRecognition
     /// </summary>
     public partial class MainWindow : Window
     {
+        OpenFileDialog _dlg = new OpenFileDialog();
+        Instance _instance;
+        ImageData _imageData;
+        Loader _loader;
         public MainWindow()
         {
             InitializeComponent();
+            _loader = new Loader();
+            _imageData = _loader.GetData(@"C:\FizzBash 2022\archive\trainingSample\trainingSample");    
+            
+            _dlg.InitialDirectory = @"C:\FizzBash 2022\";
+            _dlg.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
+            _dlg.RestoreDirectory = true;
+            _dlg.Multiselect = false;
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.InitialDirectory = "c:\\";
-            dlg.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
-            dlg.RestoreDirectory = true;
-
-            if (dlg.ShowDialog() ?? false)
+        {                       
+            if (_dlg.ShowDialog() ?? false)
             {
-                string selectedFileName = dlg.FileName;
+                One.Visibility = Visibility.Collapsed;
+                NotOne.Visibility = Visibility.Collapsed;
+
+                string selectedFileName = _dlg.FileName;
                 FileNameLabel.Content = selectedFileName;
                 BitmapImage image = new BitmapImage();
                 image.BeginInit();
                 image.UriSource = new Uri(selectedFileName);
                 image.EndInit();
-                SelectedImage.Source = image;                
-            }            
+                SelectedImage.Source = image;
+
+                double[] imageData = _loader
+                    .GetImageFileData(_dlg.FileName)
+                    .Select(i => (double)i)
+                    .ToArray();
+
+                double[] output = _instance.Process(imageData);
+
+                bool iThinkItsAOne = output[1] == output.Max();
+
+                One.Visibility = iThinkItsAOne ? Visibility.Visible : Visibility.Collapsed;
+                NotOne.Visibility = iThinkItsAOne ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        private void NetworkButton_Click(object sender, RoutedEventArgs e)
+        {
+            Network network = new Network(_imageData);
+
+            network.ShowDialog();
+
+            if (network.SelectedInstance != null)
+            {
+                BrowseButton.IsEnabled = true;
+                Warning.Visibility = Visibility.Collapsed;
+                Title = $"Using {network.SelectedInstance.Name}";
+                _instance = network.SelectedInstance;                
+            }
         }
     }
 }

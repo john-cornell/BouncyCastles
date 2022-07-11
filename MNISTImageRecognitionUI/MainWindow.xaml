@@ -5,26 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MNISTImageRecognition"
         mc:Ignorable="d"
-        Title="MNIST Image Recognition" Height="257" Width="400">
+        Title="MNIST Image Recognition" Height="257" Width="600">
     <StackPanel>
         <ToolBar>
-            <Button Content="Network">
-                
-            </Button>
+            <Button Content="Network" Click="NetworkButton_Click" />
         </ToolBar>
         <StackPanel Orientation="Horizontal" Background="LightBlue" Height="40" HorizontalAlignment="Stretch">
-            <Label Margin="10,0,0,0" Height="23" Name="Label1">
-                Current File:
+            <Label Margin="10,0,0,0" Height="26" Name="Label1">
+                Current Image:
             </Label>
-            <Label Margin="5,0,0,0" Height="24" Name="FileNameLabel" Width="207" />
-            <Button Margin="5,0,0,0" Height="23" Name="BrowseButton" Width="75" Click="BrowseButton_Click" HorizontalAlignment="Right">
+            <Label Margin="5,0,0,0" Height="24" Name="FileNameLabel" HorizontalAlignment="Stretch" />
+            <Button Margin="5,0,0,0" Height="23" Name="BrowseButton" Width="75" Click="BrowseButton_Click" IsEnabled="False" HorizontalAlignment="Right">
                 Browse
             </Button>
+            <Label Foreground="DarkRed" Margin="10,0,0,0" VerticalAlignment="Center" Name="Warning">Please choose a trained instance to continue</Label>
         </StackPanel>
         <StackPanel Orientation="Vertical">
             <Label Margin="10" Content="Selected Image" FontWeight="Medium"/>
             <Image Name="SelectedImage" Height="56" Width="56" Margin="20, 0" HorizontalAlignment="Left" />
-
+            <Label Name="One" Visibility="Collapsed">Image Is a One</Label>
+            <Label Name="NotOne" Visibility="Collapsed">Image Is NOT a One</Label>
         </StackPanel>
     </StackPanel>
 </Window>

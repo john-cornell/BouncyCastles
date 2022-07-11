@@ -45,16 +45,18 @@ namespace BouncyCastles
 
         public void Process(List<Node> inputNodes)
         {
-
             if (inputNodes.Count != Weights.Count)
                 throw new InvalidOperationException("Weight count doesn't match input node count");
 
             if (_layerLevel > 0)
-            {
+            {                
                 double weightedInputs = Enumerable.Range(0, Weights.Count)
                     .Sum(i => inputNodes[i].Value * Weights[i]);
-
+                
                 _value = ActivationFunction.Evaluate(_bias + weightedInputs);
+
+                //Needed for old Softplus calculation that was prone to blowing up
+                //if (Double.IsInfinity(_value)) _value = Double.MaxValue;
             }
         }
     }

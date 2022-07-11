@@ -108,7 +108,7 @@ namespace BouncyCastlesTests
             };
 
             var softplus = ActivationFunction.Get(ActivationFunction.ActivationFunctionType.SoftPlus);
-
+            var test = softplus.Evaluate(1967.5160715562608);
             var actual =
                 Enumerable.Range(0, 21).Select(i => -5 + ((double)i * 0.5d)).Select(v => softplus.Evaluate(v)).ToList();
 

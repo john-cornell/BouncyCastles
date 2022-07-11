@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="TestActivationFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestGenes.cs" />
     <Compile Include="TestNetwork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +60,10 @@
     <ProjectReference Include="..\BouncyCastles\BouncyCastles.csproj">
       <Project>{16339c21-731f-4e4d-a2f3-a39ed87ee7a9}</Project>
       <Name>BouncyCastles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MNISTImageRecognitionTraining\MNISTImageRecognitionTraining.csproj">
+      <Project>{15688432-e7d2-4973-8da0-eecfce4fa849}</Project>
+      <Name>MNISTImageRecognitionTraining</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
