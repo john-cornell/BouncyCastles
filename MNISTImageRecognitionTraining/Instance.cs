@@ -12,22 +12,33 @@ namespace MNISTImageRecognitionTraining
 {
     public class Instance
     {
+        public int LabelToSearch { get; set; } = 1;
+
         public string Name { get; set; }
         double[] _genesCache = null;
 
         NeuralNetwork _network;
         public double Accuracy { get; private set; }
         public int NodeCount => _network.Layers.SelectMany(l => l.Nodes).Count();
-        public Instance(double[] genes = null)
-        {
-            _network = NeuralNetwork.Create(784, 128, 10);
 
+        public Instance() : this(null, null)
+        {
+            
+        }
+
+        public Instance(int[] layers, double[] genes)
+        {
             if (genes == null)
             {
+                _network = NeuralNetwork.Create(784, 128, 10);
                 Randomise();
             }
             else
             {
+                if (layers == null) throw new ArgumentNullException(nameof(layers));
+
+                _network = NeuralNetwork.Create(layers);
+
                 Genes = genes;
             }
         }
@@ -48,7 +59,7 @@ namespace MNISTImageRecognitionTraining
             }
         }
 
-        public double[] Process(double[] data)=> _network.Process(data);        
+        public double[] Process(double[] data) => _network.Process(data);
 
         public double Train(ImageData data)
         {
@@ -58,7 +69,7 @@ namespace MNISTImageRecognitionTraining
             {
                 double[] result = _network.Process(item.Data.Select(i => (double)i).ToArray());
 
-                if (item.Label == 1)
+                if (item.Label == LabelToSearch)
                 {
                     if (result.Max() == result[item.Label])
                     {
@@ -70,14 +81,14 @@ namespace MNISTImageRecognitionTraining
                         Accuracy -= 1d;
                     }
                 }
-                
-                else if (result.Max() != result[1])
+
+                else if (result.Max() != result[LabelToSearch])
                 {
-                    if (item.Label == 1)
+                    if (item.Label == LabelToSearch)
                         Accuracy -= 1d;
                     else
                         Accuracy += 1d;
-                }                
+                }
             }
 
             return Accuracy;
@@ -111,6 +122,8 @@ namespace MNISTImageRecognitionTraining
             }
         }
 
+        public int[] NetworkSize => _network.Layers.Select(l => l.Nodes.Count).ToArray();        
+
         public double[] Genes
         {
             get
@@ -120,7 +133,6 @@ namespace MNISTImageRecognitionTraining
             }
             set
             {
-
                 try
                 {
                     int position = 0;

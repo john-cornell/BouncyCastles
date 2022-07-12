@@ -67,6 +67,9 @@ namespace MNISTImageRecognitionTraining
                 if (top[0].Accuracy > max)
                 {
                     StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.Append("[");
+                    stringBuilder.Append(string.Join(",", top[0].NetworkSize));
+                    stringBuilder.Append("]");
 
                     foreach (double gene in top[0].Genes)
                     {
@@ -75,11 +78,11 @@ namespace MNISTImageRecognitionTraining
                     }                    
 
                     Console.WriteLine($"Improvement {max} -> {top[0].Accuracy}");
-                    File.WriteAllText($"{Id}-Epoch-{e}_{top[0].Accuracy}.nn", stringBuilder.ToString());
+                    File.WriteAllText($"{Id}-Epoch-{e}_{top[0].Accuracy}_{top[0].LabelToSearch}.nn", stringBuilder.ToString());
                     max = top[0].Accuracy;
                 }
 
-                _instances = GetNewInstances(top, nextTop).ToList();
+                _instances = GetNewInstances(top, nextTop).Take(_minPopulation).ToList();
                 Console.WriteLine($"New population count: {_instances.Count}");
             }
         }
@@ -109,7 +112,7 @@ namespace MNISTImageRecognitionTraining
                 foreach (Instance instance2 in nextTop)
                 {
                     items += 6;
-                    (Instance, Instance) instances = CrossOver(instanceGenes, instance2.Genes);
+                    (Instance, Instance) instances = CrossOver(instance.NetworkSize, instanceGenes, instance2.Genes);
 
                     yield return instances.Item1;
                     yield return instances.Item2;
@@ -155,10 +158,10 @@ namespace MNISTImageRecognitionTraining
                 }
             }
 
-            return new Instance(newGenes);
+            return new Instance(item.NetworkSize, newGenes);
         }
 
-        (Instance, Instance) CrossOver(double[] geneA, double[] geneB)
+        (Instance, Instance) CrossOver(int[] layers, double[] geneA, double[] geneB)
         {
             int pos = MLPMaths.Random(0, geneA.Length);
 
@@ -174,7 +177,7 @@ namespace MNISTImageRecognitionTraining
                 copyA[i] = geneB[i];
             }
 
-            return (new Instance(copyA), new Instance(copyB));
+            return (new Instance(layers, copyA), new Instance(layers, copyB));
         }
 
         private Instance[] GetMax(List<Instance> instances, double previousMax)

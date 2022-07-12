@@ -10,7 +10,19 @@ namespace MNISTImageRecognitionTraining
 {
     public class Loader
     {
-        public ImageData GetData (string directory)
+        public static Loader Instance = new Loader(true);
+
+        bool _fullGreyscale;
+
+        private Loader(bool fullGreyscale)
+        {
+            _fullGreyscale=fullGreyscale;
+            ImageDataDefault = GetData(@"C:\FizzBash 2022\archive\trainingSample\trainingSample");
+        }
+
+        public ImageData ImageDataDefault { get; private set; }
+
+        private ImageData GetData (string directory)
         {
             Dictionary<string, NumericItem> data = new Dictionary<string, NumericItem>();
 
@@ -34,7 +46,7 @@ namespace MNISTImageRecognitionTraining
                         data[file.Name] = new NumericItem(file.Name, label);
                         var item = data[file.Name];
 
-                        item.Data = GetImageFileData(file.FullName);
+                        item.Data = GetImageFileData(file.FullName, true);
                     }
                 }
             }
@@ -42,7 +54,7 @@ namespace MNISTImageRecognitionTraining
             return new ImageData(data);
         }
 
-        public int[] GetImageFileData(string path)
+        public int[] GetImageFileData(string path, bool fullGreyScale)
         {
             Bitmap bitmap = Bitmap.FromFile(path) as Bitmap;
             List<int> values = new List<int>();
@@ -52,7 +64,10 @@ namespace MNISTImageRecognitionTraining
                 for (int j = 0; j < 28; j++)
                 {
                     System.Drawing.Color pixel = bitmap.GetPixel(i, j);
-                    values.Add(pixel.R);//Greyscale, RGB values are identical
+
+                    int colour = fullGreyScale ? pixel.R : pixel.R > 12 ? 255 : 0;
+
+                    values.Add(colour);//Greyscale, RGB values are identical so only looking at R
                 }
             }
             return values.ToArray();
@@ -61,10 +76,14 @@ namespace MNISTImageRecognitionTraining
         public async Task<Instance> GetInstance(string filename, ImageData imageData)
         {            
             string data = File.ReadAllText(filename);
-           
-            double[] genes = data.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => Double.Parse(i)).ToArray();
+            
+            string[] dataParts = data.Split(new char[] { ']' }, StringSplitOptions.RemoveEmptyEntries);
+            
+            int[] layers = dataParts[0].Substring(1).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => Int32.Parse(i)).ToArray();
 
-           Instance instance = new Instance(genes);
+            double[] genes = dataParts[1].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => Double.Parse(i)).ToArray();
+
+           Instance instance = new Instance(layers, genes);
 
            instance.Train(imageData);
            instance.Name = $"{new FileInfo(filename).Name} ({instance.Accuracy}) {(Math.Round(instance.Accuracy/(double) imageData.Data.Count, 2) * 100d)}%";

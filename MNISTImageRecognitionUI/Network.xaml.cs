@@ -42,7 +42,7 @@ namespace MNISTImageRecognition
             {
                 try
                 {
-                    Loader loader = new Loader();
+                    Loader loader = Loader.Instance;
 
                     InstanceName.Content = "LOADING ...";
 
@@ -61,7 +61,7 @@ namespace MNISTImageRecognition
 
         private void Test_Click(object sender, RoutedEventArgs e)
         {
-            var imageData = new Loader().GetData(@"C:\FB\archive\trainingSample\trainingSample");
+            var imageData = Loader.Instance.ImageDataDefault;
 
             SelectedInstance.Train(imageData);
 

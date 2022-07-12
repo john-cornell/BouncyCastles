@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\DebugUI\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BouncyCastles\BouncyCastles.csproj">
-      <Project>{16339C21-731F-4E4D-A2F3-A39ED87EE7A9}</Project>
+      <Project>{16339c21-731f-4e4d-a2f3-a39ed87ee7a9}</Project>
       <Name>BouncyCastles</Name>
     </ProjectReference>
   </ItemGroup>

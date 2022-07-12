@@ -16,9 +16,9 @@ namespace BouncyCastlesTests
         public void WhenCreatingGene_ShouldRecreate()
         {
             Instance instance = new Instance();
-            double[] genes = instance.Genes;
+            double[] genes = instance.Genes;            
 
-            Instance instance2 = new Instance(genes);
+            Instance instance2 = new Instance(instance.NetworkSize, genes);
             double[] genes2 = instance2.Genes;
 
             Assert.IsTrue(Enumerable.SequenceEqual(genes, genes2));

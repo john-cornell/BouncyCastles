@@ -30,8 +30,8 @@ namespace MNISTImageRecognition
         public MainWindow()
         {
             InitializeComponent();
-            _loader = new Loader();
-            _imageData = _loader.GetData(@"C:\FizzBash 2022\archive\trainingSample\trainingSample");    
+            _loader = Loader.Instance;
+            _imageData = _loader.ImageDataDefault; 
             
             _dlg.InitialDirectory = @"C:\FizzBash 2022\";
             _dlg.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
@@ -55,7 +55,7 @@ namespace MNISTImageRecognition
                 SelectedImage.Source = image;
 
                 double[] imageData = _loader
-                    .GetImageFileData(_dlg.FileName)
+                    .GetImageFileData(_dlg.FileName, true)
                     .Select(i => (double)i)
                     .ToArray();
 
